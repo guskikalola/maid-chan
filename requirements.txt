@@ -1,2 +1,2 @@
 # Requeriments for Maid-chan to run
-PyQt4 >= 5.14
+PyQt4 >= 5.14.1
