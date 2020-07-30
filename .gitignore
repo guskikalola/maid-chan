@@ -1,1 +1,6 @@
-cfg_maidChan.txt
+config.json
+*/__pycache__
+old_main.py
+slime.gif
+.vscode
+cfg_maidchan.txt
