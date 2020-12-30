@@ -1,2 +1,4 @@
-# Requeriments for Maid-chan to run
+# Requirements for Maid-chan to run
 PyQt5==5.14.1
+playsound==1.2.2
+datetime==4.3

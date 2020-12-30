@@ -1,6 +1,8 @@
 ![Maid-chan Notifications](https://github.com/guskikalola/maid-chan/workflows/Maid-chan%20Notifications/badge.svg?branch=master)
 # Maid-chan's Notification System
 # config.json file
+
+```json
 {
     "SelectedScreen":1,
     "email": {
@@ -10,7 +12,10 @@
         "ignoredSenders":["Twitter <info@twitter.com>"]
     },
     "modules": {
-        "email":true
+        "email":true,
+        "speedtest":true,
+        "alarms":true
     },
     "debug": false
 }
+``` 

@@ -5,11 +5,12 @@
 #                                           #
 #############################################
 import imaplib
+from playsound import playsound
 from time import sleep
 from email import message_from_string
 from email.header import decode_header
 from threading import Thread
-from PyQt5.Qt import QObject,QThread, QTextDocument
+from PyQt5.Qt import QObject,QThread, QTextDocument, QAudio
 # Load mail config from the config.json
 import json
 with open('./config.json') as configFile_data:
@@ -26,6 +27,7 @@ class mailListener(Thread):
         self.username = username
         self.password = password
         self.mail = imaplib.IMAP4_SSL("imap.gmail.com")
+        self.newMailSound = "../resources/sounds/newmail.mp3"
 
     def login(self):
         if(self.mail.state == "NONAUTH"): # Only login if there is no auth already
@@ -68,7 +70,7 @@ class mailListener(Thread):
                     email_data["from"] = ''.join(sender)  # [FROM(Sender) SET]
                 else:
                     return False
-        return email_data
+        return "Ha recibido un correo de: \n" + email_data["from"] + "\nAsunto:\n" + email_data["subject"]
 
     def start(self, maid_thread):   # Runs the listener in a separated thread
         # t = Thread(target=self.listen, args=[callback])
@@ -92,14 +94,18 @@ class mailListener(Thread):
                 currentLength = data[0].split()[-1]
                 data = self.read()
                 if(int(currentLength) < int(self.lastLength)):
+                    def playSound():
+                        Thread(target=playsound,args=['resources/sounds/newmail.mp3']).start()
                     def notify():
                         maid_thread.notificationQueue.append(data)
                         if(maid_thread.working == False):
+                            playSound()
                             maid_thread.createNotification()
                         else:
                             looping = True
                             while(looping):
                                 if(maid_thread.working == False):
+                                    playSound()
                                     maid_thread.createNotification()
                                     looping = False
                     self.slave.work(notify)
